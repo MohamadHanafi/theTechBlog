@@ -1,0 +1,13 @@
+.navbar {
+  background-color: #ffafaf;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-link {
+  cursor: pointer;
+  color: #ffebcc;
+}

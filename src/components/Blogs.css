@@ -1,0 +1,25 @@
+.blogs {
+  margin-top: 40px;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 50px;
+  row-gap: 50px;
+}
+.blog {
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.blog p {
+  margin: 15px 0px;
+}
+
+.blog:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-photo {
+  height: 200px;
+  width: 100%;
+}

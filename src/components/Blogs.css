@@ -23,3 +23,15 @@
   height: 200px;
   width: 100%;
 }
+
+@media screen and (max-width: 768px) {
+  .blogs {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media screen and (max-width: 980px) and (min-width: 768px) {
+  .blogs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

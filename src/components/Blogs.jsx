@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getBlogs } from "../actions/blogsActions";
+
 import { Container } from "react-bootstrap";
 import Blog from "./Blog";
-import { Blogs as blogsArray } from "../Blogs";
+
 import "./Blogs.css";
 
+import Loader from "./Loader";
+import Message from "./Message";
+
 const Blogs = () => {
-  return (
+  const dispatch = useDispatch();
+
+  const blogsArray = useSelector((state) => state.blogs);
+  const { blogs, loading, error } = blogsArray;
+
+  useEffect(() => {
+    dispatch(getBlogs());
+  }, [dispatch]);
+
+  return blogs ? (
     <Container className="blogs">
-      {blogsArray.map((blog) => {
+      {blogs.map((blog) => {
         return (
           <Blog
             key={blog._id}
@@ -19,6 +35,12 @@ const Blogs = () => {
         );
       })}
     </Container>
+  ) : loading ? (
+    <Loader />
+  ) : error ? (
+    <Message variant="dark">{error}</Message>
+  ) : (
+    <></>
   );
 };
 

@@ -9,9 +9,12 @@ const Loader = () => {
     display: "block",
   };
   return (
-    <Spinner animation="grow" variant="primary" role="status" style={style}>
-      <span>Loading ...</span>
-    </Spinner>
+    <Spinner
+      animation="grow"
+      variant="primary"
+      role="status"
+      style={style}
+    ></Spinner>
   );
 };
 

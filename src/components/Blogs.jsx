@@ -21,7 +21,9 @@ const Blogs = () => {
     dispatch(getBlogs());
   }, [dispatch]);
 
-  return blogs ? (
+  return loading ? (
+    <Loader />
+  ) : blogs ? (
     <Container className="blogs">
       {blogs.map((blog) => {
         return (
@@ -30,13 +32,11 @@ const Blogs = () => {
             image={blog.photo}
             title={blog.title}
             body={blog.body}
-            createdAt={blog.createdAt}
+            createdAt={blog.createdAt.substring(0, 10)}
           />
         );
       })}
     </Container>
-  ) : loading ? (
-    <Loader />
   ) : error ? (
     <Message variant="dark">{error}</Message>
   ) : (

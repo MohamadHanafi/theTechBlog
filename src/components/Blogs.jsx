@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { Link } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "../actions/blogsActions";
 
@@ -27,13 +29,16 @@ const Blogs = () => {
     <Container className="blogs">
       {blogs.map((blog) => {
         return (
-          <Blog
-            key={blog._id}
-            image={blog.photo}
-            title={blog.title}
-            body={blog.body}
-            createdAt={blog.createdAt.substring(0, 10)}
-          />
+          <Link to={`/blogs/${blog._id}`}>
+            <Blog
+              key={blog._id}
+              image={blog.photo}
+              title={blog.title}
+              description={blog.description}
+              body={blog.body}
+              createdAt={blog.createdAt.substring(0, 10)}
+            />
+          </Link>
         );
       })}
     </Container>

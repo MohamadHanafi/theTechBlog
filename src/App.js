@@ -7,15 +7,19 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import HomeScreen from "./screens/HomeScreen";
+import BlogScreen from "./screens/BlogScreen";
+import SigninScreen from "./screens/SigninScreen";
 
 function App() {
   return (
     <Router>
       <Header />
       <BackToTop />
-      <main className="App">
+      <main className="App" style={{ minHeight: "80vh" }}>
         <Routes>
           <Route exact path="/" element={<HomeScreen />} />
+          <Route path="/blogs/:id" element={<BlogScreen />} />
+          <Route path="/signin" element={<SigninScreen />} />
         </Routes>
       </main>
       <Footer />

@@ -7,6 +7,8 @@ import { getBlogs } from "../actions/blogsActions";
 import Loader from "./Loader";
 import Message from "./Message";
 
+import { createMarkup } from "../assets/createMarkup";
+
 const Hero = () => {
   const dispatch = useDispatch();
 
@@ -16,6 +18,7 @@ const Hero = () => {
   useEffect(() => {
     dispatch(getBlogs());
   }, []);
+
   return loading ? (
     <Loader />
   ) : blogs ? (
@@ -28,7 +31,7 @@ const Hero = () => {
           <div className="blog-content">
             <p>{blogs[0].createdAt.substring(0, 10)}</p>
             <h1>{blogs[0].title}</h1>
-            <p>{blogs[0].body.substring(0, 100)} ...</p>
+            <p>{blogs[0].description.substring(0, 100)}</p>
           </div>
         </Col>
       </Row>

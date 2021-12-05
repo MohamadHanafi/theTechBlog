@@ -1,33 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormContainer from "../components/FormContainer";
 
 import { Form, Button } from "react-bootstrap";
 
-const SigninScreen = () => {
-  const [name, setName] = useState("");
+import { userLogin } from "../actions/userActions";
+
+import { useSelector, useDispatch } from "react-redux";
+
+const SignInScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
+  const { loading, userInfo, error } = useSelector((state) => state.userLogin);
+
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(userLogin(email, password));
   };
 
   return (
     <FormContainer>
       <h1>Sign In</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter name"
-            required
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-        </Form.Group>
+      <Form onSubmit={submitHandler} className="d-grid gap-3">
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -52,13 +48,12 @@ const SigninScreen = () => {
             }}
           />
         </Form.Group>
-
-        <Button as="button" variant="primary" type="submit">
-          Sign In
+        <Button variant="primary" type="submit">
+          {loading ? "Loading..." : "Sign In"}
         </Button>
       </Form>
     </FormContainer>
   );
 };
 
-export default SigninScreen;
+export default SignInScreen;

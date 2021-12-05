@@ -12,7 +12,7 @@ const Header = () => {
         </Link>
 
         <Nav className="links">
-          <button type="button" class="btn btn-link btn-sm">
+          <button type="button" class="btn btn-link btn-sm ">
             BookMarks
           </button>
           <Link to="/signin" class="btn btn-link btn-sm">

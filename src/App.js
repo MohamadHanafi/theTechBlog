@@ -9,6 +9,7 @@ import Hero from "./components/Hero";
 import HomeScreen from "./screens/HomeScreen";
 import BlogScreen from "./screens/BlogScreen";
 import SignInScreen from "./screens/SignInScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomeScreen />} />
           <Route path="/blogs/:id" element={<BlogScreen />} />
-          <Route path="/signin" element={<SignInScreen />} />
+          <Route path="/login" element={<SignInScreen />} />
+          <Route path="/profile" element={<ProfileScreen />} />
         </Routes>
       </main>
       <Footer />

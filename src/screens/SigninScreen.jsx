@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FormContainer from "../components/FormContainer";
+import Message from "../components/Message";
+
+import { useNavigate } from "react-router-dom";
 
 import { Form, Button } from "react-bootstrap";
 
@@ -13,16 +16,27 @@ const SignInScreen = () => {
 
   const dispatch = useDispatch();
 
+  let navigate = useNavigate();
+
   const { loading, userInfo, error } = useSelector((state) => state.userLogin);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  });
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(userLogin(email, password));
+    if (userInfo) {
+      navigate("/");
+    }
   };
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1 className="mt-3">Sign In</h1>
       <Form onSubmit={submitHandler} className="d-grid gap-3">
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
@@ -48,6 +62,11 @@ const SignInScreen = () => {
             }}
           />
         </Form.Group>
+        {error && (
+          <Message variant="danger" class="mt-2">
+            {error}
+          </Message>
+        )}
         <Button variant="primary" type="submit">
           {loading ? "Loading..." : "Sign In"}
         </Button>

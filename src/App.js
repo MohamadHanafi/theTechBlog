@@ -10,6 +10,7 @@ import HomeScreen from "./screens/HomeScreen";
 import BlogScreen from "./screens/BlogScreen";
 import SignInScreen from "./screens/SignInScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/blogs/:id" element={<BlogScreen />} />
           <Route path="/login" element={<SignInScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
+          <Route path="/register" element={<RegisterScreen />} />
         </Routes>
       </main>
       <Footer />

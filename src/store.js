@@ -3,11 +3,17 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { blogsReducer } from "./reducers/blogsReducers";
-import { userLoginReducer } from "./reducers/userReducer";
+import {
+  userLoginReducer,
+  userUpdateReducer,
+  userCreateReducer,
+} from "./reducers/userReducer";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   blogs: blogsReducer,
+  userUpdate: userUpdateReducer,
+  userCreate: userCreateReducer,
 });
 
 const middleware = [thunk];

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 import { userLogin } from "../actions/userActions";
 
@@ -70,6 +70,11 @@ const SignInScreen = () => {
         <Button variant="primary" type="submit">
           {loading ? "Loading..." : "Sign In"}
         </Button>
+        <Row className="py-3">
+          <Col>
+            New User? <Link to={"/register"}>Register</Link>
+          </Col>
+        </Row>
       </Form>
     </FormContainer>
   );

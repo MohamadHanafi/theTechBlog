@@ -2,8 +2,11 @@ import Button from "@restart/ui/esm/Button";
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 
+import Message from "../components/Message";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { userUpdate } from "../actions/userActions";
 
 import "./ProfileScreen.css";
 
@@ -17,6 +20,14 @@ const ProfileScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const {
+    loading,
+    success,
+    error: userUpdateError,
+    userInfo: userUpdateInfo,
+  } = useSelector((state) => state.userUpdate);
 
   useEffect(() => {
     if (userInfo) {
@@ -25,11 +36,29 @@ const ProfileScreen = () => {
     } else {
       navigate("/login");
     }
-  }, [userInfo]);
+
+    if (userUpdateError) {
+      setError(userUpdateError);
+    }
+
+    if (success) {
+      setError("");
+    }
+  }, [userInfo, userUpdateError]);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(event);
+    if (password !== confirmPassword) {
+      setError("passwords are not matching");
+      return;
+    }
+    const user = {
+      email: email,
+      name: name ? name : userInfo.name,
+      password: password ? password : userInfo.password,
+    };
+    dispatch(userUpdate(user));
+    setError("");
   };
 
   return (
@@ -37,6 +66,8 @@ const ProfileScreen = () => {
       <Row>
         <Col sm={12} md={3}>
           <h1 className="mt-2">Profile Screen</h1>
+          {error && <Message variant="danger">{error}</Message>}
+          {success && <Message variant="success">success</Message>}
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
@@ -87,7 +118,7 @@ const ProfileScreen = () => {
               type="submit"
               className="btn btn-primary btn-update my-3"
             >
-              Upload
+              {loading ? "Loading..." : "Update"}
             </Button>
           </Form>
         </Col>

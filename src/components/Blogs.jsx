@@ -12,14 +12,15 @@ import "./Blogs.css";
 
 import Loader from "./Loader";
 import Message from "./Message";
+import { GET_BLOG_RESET } from "../constants/blogsConstants";
 
 const Blogs = () => {
   const dispatch = useDispatch();
 
-  const blogsArray = useSelector((state) => state.blogs);
-  const { blogs, loading, error } = blogsArray;
+  const { blogs, loading, error } = useSelector((state) => state.blogs);
 
   useEffect(() => {
+    dispatch({ type: GET_BLOG_RESET });
     dispatch(getBlogs());
   }, [dispatch]);
 
@@ -29,10 +30,9 @@ const Blogs = () => {
     <Container className="blogs">
       {blogs.map((blog) => {
         return (
-          <Link to={`/blogs/${blog._id}`}>
+          <Link to={`/blogs/${blog.slug}`} key={blog._id}>
             <Blog
-              key={blog._id}
-              image={blog.photo}
+              image={blog.image}
               title={blog.title}
               description={blog.description}
               body={blog.body}

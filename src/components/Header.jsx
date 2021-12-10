@@ -4,7 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { USER_LOGOUT } from "../constants/userConstants";
+import { USER_CREATE_RESET, USER_LOGOUT } from "../constants/userConstants";
 
 import "./Header.css";
 
@@ -15,6 +15,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch({ type: USER_LOGOUT });
+    dispatch({ type: USER_CREATE_RESET });
     localStorage.removeItem("userInfo");
     navigate("/");
   };
@@ -47,14 +48,8 @@ const Header = () => {
         id="adminMenu"
         className="btn btn-link btn-sm "
       >
-        <LinkContainer to="/admin/userList">
+        <LinkContainer to="/admin/users">
           <NavDropdown.Item>Users</NavDropdown.Item>
-        </LinkContainer>
-        <LinkContainer to="/admin/productList">
-          <NavDropdown.Item>Products</NavDropdown.Item>
-        </LinkContainer>
-        <LinkContainer to="/admin/orderList">
-          <NavDropdown.Item>Orders</NavDropdown.Item>
         </LinkContainer>
       </NavDropdown>
     );
@@ -73,6 +68,13 @@ const Header = () => {
           </button>
           {userInfo ? renderUserInfoDropDown() : renderLoginLink()}
           {userInfo && userInfo.role === "admin" && renderAdminDropDown()}
+          {userInfo && ["admin", "publisher"].includes(userInfo.role) && (
+            <LinkContainer to="/blogs/new">
+              <button type="button" className="btn btn-link btn-sm ">
+                New{" "}
+              </button>
+            </LinkContainer>
+          )}
         </Nav>
       </Container>
     </Navbar>

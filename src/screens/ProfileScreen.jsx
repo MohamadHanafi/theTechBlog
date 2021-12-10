@@ -26,7 +26,6 @@ const ProfileScreen = () => {
     loading,
     success,
     error: userUpdateError,
-    userInfo: userUpdateInfo,
   } = useSelector((state) => state.userUpdate);
 
   useEffect(() => {
@@ -44,7 +43,7 @@ const ProfileScreen = () => {
     if (success) {
       setError("");
     }
-  }, [userInfo, userUpdateError]);
+  }, [userInfo, userUpdateError, success, navigate]);
 
   const submitHandler = (event) => {
     event.preventDefault();

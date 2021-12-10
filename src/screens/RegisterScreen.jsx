@@ -29,9 +29,7 @@ const RegisterScreen = () => {
     dispatch(userCreate({ name, email, password }));
   };
 
-  const { loading, error, userInfo, success } = useSelector(
-    (state) => state.userCreate
-  );
+  const { loading, error, success } = useSelector((state) => state.userCreate);
 
   useEffect(() => {
     if (success) {
@@ -40,7 +38,7 @@ const RegisterScreen = () => {
     } else if (error) {
       setMessage(error);
     }
-  }, [success, error]);
+  }, [success, error, navigate]);
 
   return (
     <Container>

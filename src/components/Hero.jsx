@@ -7,17 +7,14 @@ import { getBlogs } from "../actions/blogsActions";
 import Loader from "./Loader";
 import Message from "./Message";
 
-import { createMarkup } from "../assets/createMarkup";
-
 const Hero = () => {
   const dispatch = useDispatch();
 
-  const blogsList = useSelector((state) => state.blogs);
-  const { blogs, loading, error } = blogsList;
+  const { blogs, loading, error } = useSelector((state) => state.blogs);
 
   useEffect(() => {
     dispatch(getBlogs());
-  }, []);
+  }, [dispatch]);
 
   return loading ? (
     <Loader />
@@ -25,7 +22,7 @@ const Hero = () => {
     <Container className="featured">
       <Row>
         <Col sm="12" md="8">
-          <Image src={blogs[0].photo} fluid rounded className="thumbnail" />
+          <Image src={blogs[0].image} fluid rounded className="thumbnail" />
         </Col>
         <Col sm="12" md="4">
           <div className="blog-content">

@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import "./bootstrap.min.css";
 import "./App.css";
+
 import BackToTop from "./components/BackToTop";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -17,10 +19,19 @@ function App() {
   return (
     <Router>
       <Header />
-      <BackToTop />
-      <main className="App" style={{ minHeight: "80vh" }}>
+
+      <main className="App">
         <Routes>
-          <Route exact path="/" element={<HomeScreen />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <>
+                <HomeScreen />
+                <BackToTop />
+              </>
+            }
+          />
           <Route path="/bookmarks" element={<BookmarksScreen />} />
           <Route path="/blogs/new" element={<NewBlogScreen />} />
           <Route path="/blogs/:slug" element={<BlogScreen />} />

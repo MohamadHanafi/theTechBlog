@@ -16,10 +16,7 @@ import Message from "../components/Message";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-solid-svg-icons";
-import {
-  BLOG_BOOKMARK_RESET,
-  BLOG_GET_BOOKMARKS_RESET,
-} from "../constants/blogsConstants";
+import { BLOG_BOOKMARK_RESET } from "../constants/blogsConstants";
 
 const BlogScreen = () => {
   const [isBooked, setIsBooked] = useState(false);
@@ -90,23 +87,24 @@ const BlogScreen = () => {
         className="blog-container mt-5 text-center"
         dangerouslySetInnerHTML={createMarkup(blog.body)}
       />
-      {userInfo && !isBooked ? (
-        <Button
-          variant="primary"
-          className="mt-5 rounded-circle bookmark-btn"
-          onClick={() => handleBookmark(blog._id, userInfo._id)}
-        >
-          <FontAwesomeIcon icon={faHeart} size="sm" />
-        </Button>
-      ) : (
-        <Button
-          variant="primary"
-          className="mt-5 rounded-circle bookmark-btn"
-          onClick={() => handleRemoveBookmark(blog._id, userInfo._id)}
-        >
-          <FontAwesomeIcon icon={faBookmark} size="sm" />
-        </Button>
-      )}
+      {userInfo &&
+        (!isBooked ? (
+          <Button
+            variant="primary"
+            className="mt-5 rounded-circle bookmark-btn"
+            onClick={() => handleBookmark(blog._id, userInfo._id)}
+          >
+            <FontAwesomeIcon icon={faHeart} size="sm" />
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            className="mt-5 rounded-circle bookmark-btn"
+            onClick={() => handleRemoveBookmark(blog._id, userInfo._id)}
+          >
+            <FontAwesomeIcon icon={faBookmark} size="sm" />
+          </Button>
+        ))}
     </Container>
   ) : (
     <></>

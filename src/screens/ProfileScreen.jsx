@@ -63,8 +63,8 @@ const ProfileScreen = () => {
   return (
     <Container>
       <Row>
-        <Col sm={12} md={3}>
-          <h1 className="mt-2">Profile Screen</h1>
+        <Col sm={12} md={6}>
+          <h1 className="mt-3">Profile Screen</h1>
           {error && <Message variant="danger">{error}</Message>}
           {success && <Message variant="success">success</Message>}
           <Form onSubmit={submitHandler}>

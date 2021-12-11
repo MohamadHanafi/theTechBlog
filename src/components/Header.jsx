@@ -58,7 +58,7 @@ const Header = () => {
   };
 
   return (
-    <Navbar className="navbar">
+    <Navbar className="navbar" bg="primary" variant="dark">
       <Container className="container">
         <LinkContainer to="/">
           <Navbar.Brand>Tech Blog</Navbar.Brand>

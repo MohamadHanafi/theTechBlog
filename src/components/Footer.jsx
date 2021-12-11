@@ -4,7 +4,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="bg-primary">
       <p>&copy; {new Date().getFullYear()} The Tech Blog</p>
     </footer>
   );

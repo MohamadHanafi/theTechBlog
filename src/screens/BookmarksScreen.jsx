@@ -26,11 +26,11 @@ const BookmarksScreen = () => {
     if (!blogs) {
       dispatch(getBookmarkedBlogs());
     }
-  }, []);
+  }, [blogs, dispatch, userInfo, navigate]);
 
   return (
     <Container className="bookmarks">
-      <h1 className="mt-5">BookMarks</h1>
+      <h1 className="mt-3">BookMarks</h1>
       <div className="blogs">
         {loading && <Loader />}
         {error && <Message variant="danger">{error}</Message>}

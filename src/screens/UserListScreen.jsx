@@ -110,7 +110,7 @@ const UserListScreen = () => {
   };
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-3">
       <h1>Users</h1>
       {loading ? (
         <Loader />

@@ -11,6 +11,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import NewBlogScreen from "./screens/NewBlogScreen";
 import UserListScreen from "./screens/UserListScreen";
+import BookmarksScreen from "./screens/BookmarksScreen";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <main className="App" style={{ minHeight: "80vh" }}>
         <Routes>
           <Route exact path="/" element={<HomeScreen />} />
+          <Route path="/bookmarks" element={<BookmarksScreen />} />
           <Route path="/blogs/new" element={<NewBlogScreen />} />
           <Route path="/blogs/:slug" element={<BlogScreen />} />
           <Route path="/login" element={<SignInScreen />} />

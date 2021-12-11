@@ -7,6 +7,7 @@ import {
   getBlog,
   bookmarkBlog,
   getBookmarkedBlogs,
+  removeBookmark,
 } from "../actions/blogsActions";
 
 import "./BlogScreen.css";
@@ -15,6 +16,10 @@ import Message from "../components/Message";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  BLOG_BOOKMARK_RESET,
+  BLOG_GET_BOOKMARKS_RESET,
+} from "../constants/blogsConstants";
 
 const BlogScreen = () => {
   const [isBooked, setIsBooked] = useState(false);
@@ -26,12 +31,20 @@ const BlogScreen = () => {
 
   const { blogs: bookmarks } = useSelector((state) => state.markedBlogs);
 
+  const { success: bookmarkedSuccess } = useSelector(
+    (state) => state.blogMarked
+  );
+
   useEffect(() => {
     if (!blog) {
       dispatch(getBlog(slug));
     }
 
     if (!bookmarks) {
+      dispatch(getBookmarkedBlogs());
+    }
+
+    if (bookmarkedSuccess) {
       dispatch(getBookmarkedBlogs());
     }
 
@@ -44,7 +57,11 @@ const BlogScreen = () => {
     } else {
       setIsBooked(false);
     }
-  }, [blog, bookmarks, dispatch, slug]);
+
+    return () => {
+      dispatch({ type: BLOG_BOOKMARK_RESET });
+    };
+  }, [blog, bookmarks, dispatch, slug, bookmarkedSuccess]);
 
   function createMarkup(html) {
     return { __html: html };
@@ -55,7 +72,7 @@ const BlogScreen = () => {
   };
 
   const handleRemoveBookmark = (blogId, userId) => {
-    console.log("todo: remove bookmark");
+    dispatch(removeBookmark(blogId, userId));
   };
 
   return loading ? (

@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { USER_CREATE_RESET, USER_LOGOUT } from "../constants/userConstants";
 
 import "./Header.css";
+import { BLOG_GET_BOOKMARKS_RESET } from "../constants/blogsConstants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch({ type: USER_LOGOUT });
     dispatch({ type: USER_CREATE_RESET });
+    dispatch({ type: BLOG_GET_BOOKMARKS_RESET });
     localStorage.removeItem("userInfo");
     navigate("/");
   };
@@ -63,9 +65,11 @@ const Header = () => {
         </LinkContainer>
 
         <Nav className="links">
-          <button type="button" className="btn btn-link btn-sm ">
-            BookMarks
-          </button>
+          <LinkContainer to="/bookmarks">
+            <button type="button" className="btn btn-link btn-sm ">
+              BookMarks
+            </button>
+          </LinkContainer>
           {userInfo ? renderUserInfoDropDown() : renderLoginLink()}
           {userInfo && userInfo.role === "admin" && renderAdminDropDown()}
           {userInfo && ["admin", "publisher"].includes(userInfo.role) && (

@@ -14,6 +14,9 @@ import {
   BLOG_GET_BOOKMARKS_REQUEST,
   BLOG_GET_BOOKMARKS_SUCCESS,
   BLOG_GET_BOOKMARKS_FAILED,
+  BLOG_REMOVE_BOOKMARK_REQUEST,
+  BLOG_REMOVE_BOOKMARK_SUCCESS,
+  BLOG_REMOVE_BOOKMARK_FAILED,
 } from "../constants/blogsConstants";
 import axios from "axios";
 
@@ -124,6 +127,41 @@ export const bookmarkBlog = (blogId, userId) => async (dispatch, getState) => {
     });
   }
 };
+
+export const removeBookmark =
+  (blogId, userId) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: BLOG_REMOVE_BOOKMARK_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.delete(
+        `/api/users/${userId}/${blogId}`,
+        config
+      );
+      dispatch({
+        type: BLOG_REMOVE_BOOKMARK_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: BLOG_REMOVE_BOOKMARK_FAILED,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const getBookmarkedBlogs = () => async (dispatch, getState) => {
   try {

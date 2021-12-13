@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import { Form, Button, Row, Col } from "react-bootstrap";
 
@@ -16,15 +16,20 @@ const SignInScreen = () => {
 
   const dispatch = useDispatch();
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { loading, userInfo, error } = useSelector((state) => state.userLogin);
 
+  //redirect if user is logged in
+
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate(redirect);
     }
-  });
+  }, [userInfo, redirect, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

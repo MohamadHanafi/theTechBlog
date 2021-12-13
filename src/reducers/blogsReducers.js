@@ -21,6 +21,14 @@ import {
   BLOG_REMOVE_BOOKMARK_FAILED,
   BLOG_GET_BOOKMARKS_RESET,
   BLOG_BOOKMARK_RESET,
+  BLOG_EDIT_REQUEST,
+  BLOG_EDIT_SUCCESS,
+  BLOG_EDIT_FAILED,
+  BLOG_EDIT_RESET,
+  BLOG_DELETE_REQUEST,
+  BLOG_DELETE_SUCCESS,
+  BLOG_DELETE_RESET,
+  BLOG_DELETE_FAILED,
 } from "../constants/blogsConstants";
 
 export const blogsReducer = (state = [], action) => {
@@ -100,6 +108,36 @@ export const markedBlogsReducer = (state = [], action) => {
       return { loading: false, error: action.payload };
     case BLOG_GET_BOOKMARKS_RESET:
       return [];
+    default:
+      return state;
+  }
+};
+
+export const blogEditReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BLOG_EDIT_REQUEST:
+      return { loading: true };
+    case BLOG_EDIT_SUCCESS:
+      return { loading: false, success: true };
+    case BLOG_EDIT_FAILED:
+      return { loading: false, error: action.payload };
+    case BLOG_EDIT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const blogDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BLOG_DELETE_REQUEST:
+      return { loading: true };
+    case BLOG_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case BLOG_DELETE_FAILED:
+      return { loading: false, error: action.payload };
+    case BLOG_DELETE_RESET:
+      return {};
     default:
       return state;
   }

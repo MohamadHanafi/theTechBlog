@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import Message from "../components/Message";
 
 import axios from "axios";
-import { createBlog } from "../actions/blogsActions";
-import { BLOG_CREATE_RESET } from "../constants/blogsConstants";
+import { getBlog, editBlog } from "../actions/blogsActions";
+import { BLOG_EDIT_RESET, GET_BLOG_RESET } from "../constants/blogsConstants";
 
 const NewBlogScreen = () => {
+  // initialize
+  const { slug } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector((state) => state.blogCreate);
 
+  const { blog } = useSelector((state) => state.blog);
+  const { loading, error, success } = useSelector((state) => state.blogEdit);
+
+  // set the state for the form
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [body, setBody] = useState("");
@@ -25,15 +30,34 @@ const NewBlogScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createBlog({ title, description, body, image }));
+    dispatch(
+      editBlog({
+        slug,
+        title,
+        description,
+        body,
+        image,
+      })
+    );
   };
 
   useEffect(() => {
-    if (success) {
-      dispatch({ type: BLOG_CREATE_RESET });
-      navigate("/");
+    if (!blog) {
+      dispatch(getBlog(slug));
+    } else {
+      setTitle(blog.title);
+      setDescription(blog.description);
+      setBody(blog.body);
+      setImage(blog.image);
     }
-  }, [error, success, dispatch, navigate]);
+
+    if (success) {
+      dispatch({ type: BLOG_EDIT_RESET });
+      dispatch({ type: GET_BLOG_RESET });
+      navigate(`/blogs/${slug}`);
+    }
+  }, [success, blog, slug, navigate, dispatch]);
+
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -103,8 +127,8 @@ const NewBlogScreen = () => {
           <Button
             variant="outline-danger"
             onClick={() => {
-              dispatch({ type: BLOG_CREATE_RESET });
-              navigate("/");
+              dispatch({ type: BLOG_EDIT_RESET });
+              navigate(`/blogs/${slug}`);
             }}
           >
             Cancel

@@ -1,3 +1,7 @@
+.blog-screen {
+  position: relative;
+}
+
 .blog-screen > h1 {
   margin-top: 80px;
   margin-bottom: 40px;
@@ -7,4 +11,13 @@
 
 .blog-screen .writer-date > h2 {
   margin: 0;
+}
+
+.blog-screen .edit-btn {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }

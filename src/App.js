@@ -14,6 +14,7 @@ import RegisterScreen from "./screens/RegisterScreen";
 import NewBlogScreen from "./screens/NewBlogScreen";
 import UserListScreen from "./screens/UserListScreen";
 import BookmarksScreen from "./screens/BookmarksScreen";
+import EditBlogScreen from "./screens/EditBlogScreen";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/bookmarks" element={<BookmarksScreen />} />
           <Route path="/blogs/new" element={<NewBlogScreen />} />
           <Route path="/blogs/:slug" element={<BlogScreen />} />
+          <Route path="/blogs/:slug/edit" element={<EditBlogScreen />} />
           <Route path="/login" element={<SignInScreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/register" element={<RegisterScreen />} />

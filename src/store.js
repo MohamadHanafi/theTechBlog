@@ -4,6 +4,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 import {
   blogCreateReducer,
+  blogEditReducer,
+  blogDeleteReducer,
   blogMarkedReducer,
   blogReducer,
   blogsReducer,
@@ -22,12 +24,14 @@ const reducer = combineReducers({
   blogs: blogsReducer,
   blog: blogReducer,
   blogCreate: blogCreateReducer,
+  blogEdit: blogEditReducer,
+  blogDelete: blogDeleteReducer,
+  blogMarked: blogMarkedReducer,
+  markedBlogs: markedBlogsReducer,
   userUpdate: userUpdateReducer,
   userCreate: userCreateReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
-  blogMarked: blogMarkedReducer,
-  markedBlogs: markedBlogsReducer,
 });
 
 const middleware = [thunk];

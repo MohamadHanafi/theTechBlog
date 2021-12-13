@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,6 +8,7 @@ import {
   bookmarkBlog,
   getBookmarkedBlogs,
   removeBookmark,
+  deleteBlog,
 } from "../actions/blogsActions";
 
 import "./BlogScreen.css";
@@ -20,8 +21,11 @@ import { BLOG_BOOKMARK_RESET } from "../constants/blogsConstants";
 
 const BlogScreen = () => {
   const [isBooked, setIsBooked] = useState(false);
+
   const { slug } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { loading, error, blog } = useSelector((state) => state.blog);
 
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -72,6 +76,29 @@ const BlogScreen = () => {
     dispatch(removeBookmark(blogId, userId));
   };
 
+  const redirectToLogin = () => {
+    navigate(`/login?redirect=/blogs/${slug}`);
+  };
+
+  const renderButton = (icon, callback) => {
+    return (
+      <Button
+        variant="primary"
+        className="mt-5 rounded-circle bookmark-btn"
+        onClick={() => callback(blog._id, userInfo ? userInfo._id : "")}
+      >
+        <FontAwesomeIcon icon={icon} size="sm" />
+      </Button>
+    );
+  };
+
+  const handleBlogDelete = (slug) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      dispatch(deleteBlog(slug));
+      navigate("/");
+    }
+  };
+
   return loading ? (
     <Loader />
   ) : error ? (
@@ -87,24 +114,29 @@ const BlogScreen = () => {
         className="blog-container mt-5 text-center"
         dangerouslySetInnerHTML={createMarkup(blog.body)}
       />
+      {userInfo
+        ? !isBooked
+          ? renderButton(faHeart, handleBookmark)
+          : renderButton(faBookmark, handleRemoveBookmark)
+        : renderButton(faHeart, redirectToLogin)}
       {userInfo &&
-        (!isBooked ? (
-          <Button
-            variant="primary"
-            className="mt-5 rounded-circle bookmark-btn"
-            onClick={() => handleBookmark(blog._id, userInfo._id)}
-          >
-            <FontAwesomeIcon icon={faHeart} size="sm" />
-          </Button>
-        ) : (
-          <Button
-            variant="primary"
-            className="mt-5 rounded-circle bookmark-btn"
-            onClick={() => handleRemoveBookmark(blog._id, userInfo._id)}
-          >
-            <FontAwesomeIcon icon={faBookmark} size="sm" />
-          </Button>
-        ))}
+        (userInfo.role === "admin" || userInfo._id === blog.user._id) && (
+          <div className="edit-btn">
+            <Button
+              variant="dark"
+              className="mx-1"
+              onClick={() => navigate(`/blogs/${slug}/edit`)}
+            >
+              Edit Blog
+            </Button>
+            <Button
+              variant="outline-danger"
+              onClick={() => handleBlogDelete(slug)}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
     </Container>
   ) : (
     <></>

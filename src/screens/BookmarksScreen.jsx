@@ -20,7 +20,7 @@ const BookmarksScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate("/login?redirect=bookmarks");
+      navigate("/login?redirect=/bookmarks");
     }
 
     if (!blogs) {

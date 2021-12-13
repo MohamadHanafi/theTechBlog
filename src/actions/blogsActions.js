@@ -17,6 +17,12 @@ import {
   BLOG_REMOVE_BOOKMARK_REQUEST,
   BLOG_REMOVE_BOOKMARK_SUCCESS,
   BLOG_REMOVE_BOOKMARK_FAILED,
+  BLOG_EDIT_REQUEST,
+  BLOG_EDIT_FAILED,
+  BLOG_EDIT_SUCCESS,
+  BLOG_DELETE_REQUEST,
+  BLOG_DELETE_SUCCESS,
+  BLOG_DELETE_FAILED,
 } from "../constants/blogsConstants";
 import axios from "axios";
 
@@ -184,6 +190,72 @@ export const getBookmarkedBlogs = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: BLOG_GET_BOOKMARKS_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const editBlog = (blogData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: BLOG_EDIT_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/blogs/${blogData.slug}/edit`,
+      blogData,
+      config
+    );
+
+    dispatch({
+      type: BLOG_EDIT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BLOG_EDIT_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const deleteBlog = (Slug) => (dispatch, getState) => {
+  try {
+    dispatch({ type: BLOG_DELETE_REQUEST });
+
+    const { userInfo } = getState().userLogin;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = axios.delete(`/api/blogs/${Slug}`, config);
+
+    dispatch({
+      type: BLOG_DELETE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BLOG_DELETE_FAILED,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
